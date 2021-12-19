@@ -19,6 +19,7 @@ const (
 )
 
 var password string = os.Getenv("PSQL_PASSWORD")
+var appport string = os.Getenv("PORT")
 var DB *gorm.DB
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 	router.Handle("/stats", app.StatsHandler(repo)).Methods("GET")
 	router.Handle("/test", app.TestHandler()).Methods("GET")
 	router.Handle("/another-test", app.TestHandler()).Methods("GET")
-	http.ListenAndServe(":2137", router)
+	http.ListenAndServe(":"+appport, router)
 }
 
 func connectDB() {
