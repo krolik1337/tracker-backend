@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"text/template"
@@ -13,6 +12,8 @@ import (
 	"github.com/mssola/user_agent"
 	"golang.org/x/text/language"
 )
+
+const pixel = "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B"
 
 func setCookie(e *Log, w http.ResponseWriter, r *http.Request) {
 	siteCookies := r.Cookies()
@@ -85,13 +86,15 @@ func TrackerHandler(repo Repository) http.Handler {
 		}
 		repo.Save(&log)
 		//place pixel in response header and return it
-		fileBytes, err := ioutil.ReadFile("../../pixel.gif")
-		if err != nil {
-			panic(err)
-		}
+		// fileBytes, err := ioutil.ReadFile("../../pixel.gif")
+		// if err != nil {
+		// 	panic(err)
+		// }
 		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write(fileBytes)
+		// w.Header().Set("Content-Type", "application/octet-stream")
+		w.Header().Set("Content-Type", "image/gif")
+		// w.Write(fileBytes)
+		fmt.Fprintf(w, pixel)
 	})
 }
 
@@ -139,7 +142,7 @@ func StatsHandler(repo Repository) http.Handler {
 
 func TestHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		t, err := template.ParseFiles("../../test.html")
+		t, err := template.ParseFiles("../test.html")
 		if err != nil {
 			fmt.Println(err)
 		}
