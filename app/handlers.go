@@ -142,7 +142,7 @@ func StatsHandler(repo Repository) http.Handler {
 
 func TestHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		t, err := template.ParseFiles("../test.html")
+		t, err := template.ParseFiles("/test.html")
 		if err != nil {
 			fmt.Println(err)
 		}
