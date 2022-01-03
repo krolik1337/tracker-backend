@@ -10,13 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// const (
-// 	host     = "localhost"
-// 	port     = 5432
-// 	username = "postgres"
-// 	dbname   = "trackerDB"
-// )
-
 // var password string = os.Getenv("PSQL_PASSWORD")
 var appport string = os.Getenv("PORT")
 var DB *gorm.DB

@@ -31,6 +31,8 @@ func setCookie(e *Log, w http.ResponseWriter, r *http.Request) {
 		cookie := http.Cookie{
 			Name:  "TrackerUserID",
 			Value: e.UUID,
+			MaxAge: 3600,
+			Secure: true,
 		}
 		http.SetCookie(w, &cookie)
 	}
