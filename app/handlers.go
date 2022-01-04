@@ -29,10 +29,11 @@ func setCookie(e *Log, w http.ResponseWriter, r *http.Request) {
 	if !isCookieSet {
 		e.UUID = uuid.New().String()
 		cookie := http.Cookie{
-			Name:  "TrackerUserID",
-			Value: e.UUID,
-			MaxAge: 3600,
-			Secure: true,
+			Name:     "TrackerUserID",
+			Value:    e.UUID,
+			MaxAge:   3600,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
 		}
 		http.SetCookie(w, &cookie)
 	}
@@ -88,12 +89,7 @@ func TrackerHandler(repo Repository) http.Handler {
 		}
 		repo.Save(&log)
 		//place pixel in response header and return it
-		// fileBytes, err := ioutil.ReadFile("../../pixel.gif")
-		// if err != nil {
-		// 	panic(err)
-		// }
 		w.WriteHeader(http.StatusOK)
-		// w.Header().Set("Content-Type", "application/octet-stream")
 		w.Header().Set("Content-Type", "image/gif")
 		// w.Write(fileBytes)
 		fmt.Fprintf(w, pixel)

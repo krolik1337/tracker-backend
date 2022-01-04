@@ -10,7 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// var password string = os.Getenv("PSQL_PASSWORD")
 var appport string = os.Getenv("PORT")
 var DB *gorm.DB
 
@@ -27,7 +26,6 @@ func main() {
 }
 
 func connectDB() {
-	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d", host, username, password, dbname, port)
 	db, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 	if err != nil {
 		panic(err)
