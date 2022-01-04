@@ -33,7 +33,7 @@ func setCookie(e *Log, w http.ResponseWriter, r *http.Request) {
 			Value:    e.UUID,
 			MaxAge:   3600,
 			Secure:   true,
-			SameSite: http.SameSiteLaxMode,
+			SameSite: http.SameSiteNoneMode,
 		}
 		http.SetCookie(w, &cookie)
 	}
